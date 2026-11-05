@@ -7,6 +7,7 @@ namespace RobotEscape
 {
     public sealed class ControlRoomController : MonoBehaviour
     {
+        public string nextRoomScene = "PrisonEscape";
         public RobotWalker robot;
         public RoomInteractable pressureCabinet, console, trace, archive, exitLever, exit;
         public GameObject pressurePanel, boardPanel, inspectPanel, chapterPanel;
@@ -257,7 +258,7 @@ namespace RobotEscape
             SetActive(gangReveal, false);
             SetActive(chapterPanel, capturePanel == null);
             SetActive(capturePanel, true);
-            const string ending = "铁门在身后重重合上。\n\n黑帽帮要炸毁城市中枢，贝塔还被锁在厨房。\n机器人必须先想办法离开这间牢房。\n\n第三关 · 被捕\n下一章：越狱（尚未制作）";
+            const string ending = "铁门在身后重重合上。\n\n黑帽帮要炸毁城市中枢，贝塔还被锁在厨房。\n机器人必须先想办法离开这间牢房。\n\n第三关 · 被捕\n继续：监狱越狱";
             SetText(chapterText, ending);
             SetText(captureText, ending);
         }
@@ -272,6 +273,13 @@ namespace RobotEscape
             inspectIllustration.sprite = artwork != null ? artwork.sprite : null;
             inspectIllustration.preserveAspect = true;
             inspectIllustration.enabled = inspectIllustration.sprite != null;
+        }
+
+        public void ContinueToPrison()
+        {
+            if (!Captured || !Completed || string.IsNullOrEmpty(nextRoomScene) ||
+                !Application.CanStreamedLevelBeLoaded(nextRoomScene)) return;
+            SceneManager.LoadScene(nextRoomScene);
         }
 
         private void OpenModal(GameObject panel)
