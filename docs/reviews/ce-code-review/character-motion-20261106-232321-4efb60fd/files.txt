@@ -1,0 +1,11 @@
+Assets/Scripts/RobotEscape/RobotWalker.cs
+Assets/Scripts/RobotEscape/PrisonPatrol.cs
+Assets/Scripts/RobotEscape/PrisonChapterController.cs
+Assets/Scenes/RobotEscapeDemo.unity
+Assets/Scenes/WatchRoom.unity
+Assets/Scenes/ControlRoom.unity
+Assets/Scenes/PrisonEscape.unity
+Assets/Scripts/RobotEscape/WalkableArea2D.cs
+Assets/Editor/CharacterMotionSetup.cs
+Assets/Editor/WalkableGeometryChecks.cs
+Assets/Art/CharacterMotion/ (sheets, import metadata and generation manifest)

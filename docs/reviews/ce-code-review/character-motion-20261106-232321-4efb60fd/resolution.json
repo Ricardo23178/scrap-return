@@ -1,0 +1,15 @@
+{
+  "ReviewRun": "character-motion-20261106-232321-4efb60fd",
+  "Findings": [
+    {
+      "Id": 1,
+      "Status": "resolved",
+      "Fix": "Only reject a constrained step when its requested and allowed positions differ; retain valid tiny steps and the remaining route.",
+      "RedEvidence": "D:\\Codex\\UnityTraining\\RobotEscapeMotion_20261106\\waypoint-red.json",
+      "GreenEvidence": "D:\\Codex\\UnityTraining\\RobotEscapeMotion_20261106\\verification.json"
+    }
+  ],
+  "MovementChecks": 25,
+  "PrisonRegressionChecks": 8,
+  "RuntimeErrors": 0
+}

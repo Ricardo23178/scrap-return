@@ -1,0 +1,214 @@
+{
+  "review": {
+    "status": "complete",
+    "verdict": "Ready with fixes",
+    "scope": {
+      "base": "b76efc83bcf786f09e198f9cafb002b71b1c64b6",
+      "branch": "codex/2026-11-06-character-motion",
+      "head_sha": "b76efc83bcf786f09e198f9cafb002b71b1c64b6",
+      "pr_url": null,
+      "files_changed": 22
+    },
+    "intent": "Natural displacement-driven hero gait including partial assembly; foot-based wall and machine blocking in all four chapters; separate ladder landings and a stationary far-end guard telescope action. Preserve existing interactions, puzzles, patrol timing and resets without adding dependencies.",
+    "intent_confidence": "explicit",
+    "reviewers": [
+      "correctness",
+      "testing",
+      "maintainability",
+      "adversarial"
+    ],
+    "findings": [
+      {
+        "#": 1,
+        "title": "Tiny final corner steps cancel the remaining route",
+        "severity": "P2",
+        "file": "Assets/Scripts/RobotEscape/RobotWalker.cs",
+        "line": 75,
+        "confidence": 100,
+        "autofix_class": "gated_auto",
+        "owner": "downstream-resolver",
+        "requires_verification": true,
+        "pre_existing": false,
+        "suggested_fix": "Consume reached waypoints without rejecting positive tiny steps or a tiny remaining frame budget; retain focused regressions for both cases and complete the GREEN acceptance run for the root-owned patch.",
+        "first_evidence": "Assets/Scripts/RobotEscape/RobotWalker.cs:75 --                 if (Vector2.Distance(allowed, proposed) > .002f || moved < .00001f)",
+        "why_it_matters": "A valid route around a floor corner can stop several units before the clicked destination when the final approach to an intermediate waypoint or the remaining frame budget is below 0.00001. The reviewed Update clears every remaining waypoint before recognizing that the small segment was valid. Root reproduced both cases in Unity, removed the tiny-movement guard, and started a GREEN run; that result was still pending at review completion.",
+        "evidence": [
+          "Assets/Scripts/RobotEscape/RobotWalker.cs:75 --                 if (Vector2.Distance(allowed, proposed) > .002f || moved < .00001f)",
+          "Assets/Scripts/RobotEscape/RobotWalker.cs:77 --                 if (Vector2.Distance(next, goal) < .000001f) route.RemoveAt(0); else break;",
+          "Authored ControlRoom float32 trace: start (0.10170983,-3.131), corner (0.2083815,-3.131), target (5,-2.5), speed 3.2, dt 1/60; two frames leave 4.99e-6 to the corner, then the route is cleared 4.83 units before the target.",
+          "D:/Codex/UnityTraining/RobotEscapeMotion_20261106/waypoint-red.json: 2026-11-06T23:32:05.6637668+08:00 reports both tiny-waypoint and tiny-frame-remainder cases failing in real Unity PlayMode with zero runtimeErrors.",
+          "Reviewed source is preserved in reviewed-RobotWalker.cs; current root-owned source removes the moved < .00001f guard, with GREEN verification pending."
+        ],
+        "reviewers": [
+          "correctness"
+        ],
+        "independent_reviewers": [
+          "correctness"
+        ]
+      }
+    ],
+    "actionable_findings": [
+      {
+        "#": 1,
+        "title": "Tiny final corner steps cancel the remaining route",
+        "severity": "P2",
+        "file": "Assets/Scripts/RobotEscape/RobotWalker.cs",
+        "line": 75,
+        "confidence": 100,
+        "autofix_class": "gated_auto",
+        "owner": "downstream-resolver",
+        "requires_verification": true,
+        "pre_existing": false,
+        "suggested_fix": "Consume reached waypoints without rejecting positive tiny steps or a tiny remaining frame budget; retain focused regressions for both cases and complete the GREEN acceptance run for the root-owned patch.",
+        "first_evidence": "Assets/Scripts/RobotEscape/RobotWalker.cs:75 --                 if (Vector2.Distance(allowed, proposed) > .002f || moved < .00001f)",
+        "why_it_matters": "A valid route around a floor corner can stop several units before the clicked destination when the final approach to an intermediate waypoint or the remaining frame budget is below 0.00001. The reviewed Update clears every remaining waypoint before recognizing that the small segment was valid. Root reproduced both cases in Unity, removed the tiny-movement guard, and started a GREEN run; that result was still pending at review completion.",
+        "evidence": [
+          "Assets/Scripts/RobotEscape/RobotWalker.cs:75 --                 if (Vector2.Distance(allowed, proposed) > .002f || moved < .00001f)",
+          "Assets/Scripts/RobotEscape/RobotWalker.cs:77 --                 if (Vector2.Distance(next, goal) < .000001f) route.RemoveAt(0); else break;",
+          "Authored ControlRoom float32 trace: start (0.10170983,-3.131), corner (0.2083815,-3.131), target (5,-2.5), speed 3.2, dt 1/60; two frames leave 4.99e-6 to the corner, then the route is cleared 4.83 units before the target.",
+          "D:/Codex/UnityTraining/RobotEscapeMotion_20261106/waypoint-red.json: 2026-11-06T23:32:05.6637668+08:00 reports both tiny-waypoint and tiny-frame-remainder cases failing in real Unity PlayMode with zero runtimeErrors.",
+          "Reviewed source is preserved in reviewed-RobotWalker.cs; current root-owned source removes the moved < .00001f guard, with GREEN verification pending."
+        ],
+        "reviewers": [
+          "correctness"
+        ],
+        "independent_reviewers": [
+          "correctness"
+        ]
+      }
+    ],
+    "triage_groups": [],
+    "pre_existing_findings": [],
+    "requirements_completeness": {
+      "plan_source": "explicit",
+      "plan_path": "D:\\Codex\\UnityTraining\\RobotEscapeMotion_20261106\\source\\design-and-plan.md",
+      "readiness": "legacy",
+      "requirements": [
+        {
+          "requirement": "Missing legs remain immobile; repaired legs and complete heroes have displacement-driven gait.",
+          "status": "met"
+        },
+        {
+          "requirement": "Feet remain on legal chapter floors, outside machine footprints and disconnected upper landings.",
+          "status": "met",
+          "note": "Implementation and runtime coverage present; waypoint defect #1 found and patched by root, GREEN pending."
+        },
+        {
+          "requirement": "Interactable front positions and existing NPC, inventory, climbing and puzzle contracts remain usable.",
+          "status": "met"
+        },
+        {
+          "requirement": "Guard uses a bent legal route, stationary telescope phases, interruption lowering and the existing patrol clock.",
+          "status": "met"
+        },
+        {
+          "requirement": "Original-project geometry, motion and prison regression evidence is preserved outside the game; no dependency or Git commit is added.",
+          "status": "met",
+          "note": "The initial 24 motion groups and 8 prison groups passed; focused RED and follow-up GREEN are root-owned. Temporary runners may be reattached for this follow-up and require final cleanup."
+        }
+      ]
+    },
+    "learnings": [],
+    "agent_native_gaps": [],
+    "deployment_notes": [],
+    "residual_risks": [],
+    "testing_gaps": [],
+    "coverage": {
+      "mode": "agent; report-only",
+      "reviewed_snapshot": "reviewed-RobotWalker.cs",
+      "local_reviewers_completed": 4,
+      "failed_reviewers": [],
+      "timed_out_reviewers": [],
+      "source_mutations_by_review": 0,
+      "unity_launches_by_review": 0,
+      "git_mutations_by_review": 0,
+      "previous_attempt": "The earlier interrupted attempt did not complete a review; this resumed run performed and completed the review.",
+      "scope_signals": {
+        "status": "complete",
+        "exec_lines": 270,
+        "uncounted_files": 4,
+        "lite_eligible": false
+      },
+      "scope_notes": "Seven tracked files plus explicitly authorized new runtime/editor code, geometry checks, art and metadata were reviewed. Large scene YAML was inspected through generator inputs and representative serialized changes. Root subsequently added RobotWalkerStepChecks.cs as a focused follow-up regression.",
+      "excluded": "Temporary MotionBaseline, MotionAcceptance, MotionRegression, MotionRun and PrisonAcceptance runners are evidence, not shipping scope. Unrelated preview/docs changes are excluded.",
+      "project_standards": "Not run: successful search found no applicable repository criteria files.",
+      "cross_model": {
+        "status": "not_run",
+        "reason": "No different-provider review CLI was installed on PATH; native local adversarial fallback completed. No code was sent to an external review service."
+      },
+      "independent_runtime_coverage": "Review inspected root-owned Unity evidence and test assertions; reviewers did not independently launch Unity.",
+      "initial_acceptance": "verification-before-tiny-waypoint-fix.json: 24 motion groups passed, zero runtime errors; prison-regression.json: 8 groups passed, zero runtime errors.",
+      "finding_resolution": {
+        "#": 1,
+        "status": "Root-owned code fix present; GREEN result pending",
+        "red_evidence": "D:\\Codex\\UnityTraining\\RobotEscapeMotion_20261106\\waypoint-red.json",
+        "green_log": "D:\\Codex\\UnityTraining\\RobotEscapeMotion_20261106\\waypoint-green.log"
+      },
+      "validator": {
+        "batches": 1,
+        "selected": 1,
+        "validated": 1,
+        "rejected": 0,
+        "infrastructure_failures": 0,
+        "skipped_for_cross_model": 0
+      },
+      "suppressed_by_confidence": {},
+      "malformed_findings": 0,
+      "malformed_returns": 0,
+      "mode_aware_demotions": 0,
+      "quote_gate_demotions": 0,
+      "settlement_conflicts": 0
+    },
+    "artifact_path": "D:\\Codex\\UnityTraining\\RobotEscape\\docs\\reviews\\ce-code-review\\character-motion-20261106-232321-4efb60fd",
+    "run_id": "character-motion-20261106-232321-4efb60fd"
+  },
+  "reviewers": [
+    {
+      "reviewer": "correctness",
+      "findings": [
+        {
+          "title": "Tiny final corner steps cancel the remaining route",
+          "severity": "P2",
+          "file": "Assets/Scripts/RobotEscape/RobotWalker.cs",
+          "line": 75,
+          "confidence": 100,
+          "autofix_class": "gated_auto",
+          "owner": "downstream-resolver",
+          "requires_verification": true,
+          "pre_existing": false,
+          "suggested_fix": "Consume reached waypoints before testing for no progress; preserve the remaining route when a positive legal step or leftover frame budget is below .00001f. Add regressions for a tiny final approach to an intermediate waypoint and a tiny leftover movement budget.",
+          "first_evidence": "Assets/Scripts/RobotEscape/RobotWalker.cs:75 --                 if (Vector2.Distance(allowed, proposed) > .002f || moved < .00001f)"
+        }
+      ],
+      "residual_risks": [],
+      "testing_gaps": []
+    },
+    {
+      "reviewer": "testing",
+      "findings": [],
+      "residual_risks": [],
+      "testing_gaps": []
+    },
+    {
+      "reviewer": "maintainability",
+      "findings": [],
+      "residual_risks": [],
+      "testing_gaps": []
+    },
+    {
+      "reviewer": "adversarial",
+      "findings": [],
+      "residual_risks": [],
+      "testing_gaps": []
+    }
+  ],
+  "validator": {
+    "verdicts": [
+      {
+        "#": 1,
+        "validated": true,
+        "reason": "The reviewed snapshot clears the entire route for any movement below 0.00001 before consuming a reached waypoint, despite ConstrainStep accepting legal tiny segments, and the inspected Unity verification records both regression cases failing; current source removes that guard, with GREEN verification still pending."
+      }
+    ]
+  }
+}

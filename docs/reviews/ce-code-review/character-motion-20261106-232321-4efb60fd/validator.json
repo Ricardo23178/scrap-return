@@ -1,0 +1,9 @@
+{
+  "verdicts": [
+    {
+      "#": 1,
+      "validated": true,
+      "reason": "The reviewed snapshot clears the entire route for any movement below 0.00001 before consuming a reached waypoint, despite ConstrainStep accepting legal tiny segments, and the inspected Unity verification records both regression cases failing; current source removes that guard, with GREEN verification still pending."
+    }
+  ]
+}

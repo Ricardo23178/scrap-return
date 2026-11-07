@@ -1,0 +1,50 @@
+{
+  "residual_risks": [],
+  "testing_gaps": [],
+  "coverage": {
+    "mode": "agent; report-only",
+    "reviewed_snapshot": "reviewed-RobotWalker.cs",
+    "local_reviewers_completed": 4,
+    "failed_reviewers": [],
+    "timed_out_reviewers": [],
+    "source_mutations_by_review": 0,
+    "unity_launches_by_review": 0,
+    "git_mutations_by_review": 0,
+    "previous_attempt": "The earlier interrupted attempt did not complete a review; this resumed run performed and completed the review.",
+    "scope_signals": {
+      "status": "complete",
+      "exec_lines": 270,
+      "uncounted_files": 4,
+      "lite_eligible": false
+    },
+    "scope_notes": "Seven tracked files plus explicitly authorized new runtime/editor code, geometry checks, art and metadata were reviewed. Large scene YAML was inspected through generator inputs and representative serialized changes. Root subsequently added RobotWalkerStepChecks.cs as a focused follow-up regression.",
+    "excluded": "Temporary MotionBaseline, MotionAcceptance, MotionRegression, MotionRun and PrisonAcceptance runners are evidence, not shipping scope. Unrelated preview/docs changes are excluded.",
+    "project_standards": "Not run: successful search found no applicable repository criteria files.",
+    "cross_model": {
+      "status": "not_run",
+      "reason": "No different-provider review CLI was installed on PATH; native local adversarial fallback completed. No code was sent to an external review service."
+    },
+    "independent_runtime_coverage": "Review inspected root-owned Unity evidence and test assertions; reviewers did not independently launch Unity.",
+    "initial_acceptance": "verification-before-tiny-waypoint-fix.json: 24 motion groups passed, zero runtime errors; prison-regression.json: 8 groups passed, zero runtime errors.",
+    "finding_resolution": {
+      "#": 1,
+      "status": "Root-owned code fix present; GREEN result pending",
+      "red_evidence": "D:\\Codex\\UnityTraining\\RobotEscapeMotion_20261106\\waypoint-red.json",
+      "green_log": "D:\\Codex\\UnityTraining\\RobotEscapeMotion_20261106\\waypoint-green.log"
+    },
+    "validator": {
+      "batches": 1,
+      "selected": 1,
+      "validated": 1,
+      "rejected": 0,
+      "infrastructure_failures": 0,
+      "skipped_for_cross_model": 0
+    },
+    "suppressed_by_confidence": {},
+    "malformed_findings": 0,
+    "malformed_returns": 0,
+    "mode_aware_demotions": 0,
+    "quote_gate_demotions": 0,
+    "settlement_conflicts": 0
+  }
+}

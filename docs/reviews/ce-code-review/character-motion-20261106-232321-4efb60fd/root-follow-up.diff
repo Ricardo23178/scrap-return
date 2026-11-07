@@ -1,0 +1,15 @@
+--- reviewed-RobotWalker.cs
++++ root-follow-up-RobotWalker.cs
+@@ -70,11 +70,11 @@
+                 Vector2 goal = route[0];
+                 Vector2 proposed = Vector2.MoveTowards(next, goal, remaining);
+                 Vector2 allowed = walkArea != null ? walkArea.ConstrainStep(next, proposed) : proposed;
+                 float moved = Vector2.Distance(next, allowed);
+                 next = allowed; remaining -= moved;
+-                if (Vector2.Distance(allowed, proposed) > .002f || moved < .00001f)
++                if (Vector2.Distance(allowed, proposed) > .000001f)
+                 { route.Clear(); Destination = next; break; }
+                 if (Vector2.Distance(next, goal) < .000001f) route.RemoveAt(0); else break;
+             }
+             transform.position = new Vector3(next.x, next.y, 0);
+             float distance = Vector2.Distance(before, next);

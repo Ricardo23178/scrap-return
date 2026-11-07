@@ -1,0 +1,40 @@
+[
+  {
+    "reviewer": "correctness",
+    "findings": [
+      {
+        "title": "Tiny final corner steps cancel the remaining route",
+        "severity": "P2",
+        "file": "Assets/Scripts/RobotEscape/RobotWalker.cs",
+        "line": 75,
+        "confidence": 100,
+        "autofix_class": "gated_auto",
+        "owner": "downstream-resolver",
+        "requires_verification": true,
+        "pre_existing": false,
+        "suggested_fix": "Consume reached waypoints before testing for no progress; preserve the remaining route when a positive legal step or leftover frame budget is below .00001f. Add regressions for a tiny final approach to an intermediate waypoint and a tiny leftover movement budget.",
+        "first_evidence": "Assets/Scripts/RobotEscape/RobotWalker.cs:75 --                 if (Vector2.Distance(allowed, proposed) > .002f || moved < .00001f)"
+      }
+    ],
+    "residual_risks": [],
+    "testing_gaps": []
+  },
+  {
+    "reviewer": "testing",
+    "findings": [],
+    "residual_risks": [],
+    "testing_gaps": []
+  },
+  {
+    "reviewer": "maintainability",
+    "findings": [],
+    "residual_risks": [],
+    "testing_gaps": []
+  },
+  {
+    "reviewer": "adversarial",
+    "findings": [],
+    "residual_risks": [],
+    "testing_gaps": []
+  }
+]
