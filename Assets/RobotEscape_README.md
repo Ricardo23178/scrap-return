@@ -34,21 +34,22 @@
 | `Room01Mechanism.cs` | 第一关的气压轮与压力联动 |
 | `ScrapAssembly.cs` | 部件拾取与装配判定 |
 | `SlideBlockHandle.cs` | 滑块拖拽与联锁 |
-| `RobotWalker.cs` | 点击寻路与世界坐标移动 |
+| `RobotWalker.cs` | 路径跟随、距离驱动步态与半组装腿部动作 |
+| `WalkableArea2D.cs` | 多边形地面、脚底间距、连续阻挡和绕行路径 |
 | `RoomInteractable.cs` | 统一的可交互组件（物件类型 + 站位点） |
 
 **机关用显式状态标志单向驱动。** `PressureSolved` / `BoardSolved` / `ArchiveSeen` / `ExitOpen` / `PlotHeard` 等全部是只读属性，由输入事件单向推进；UI 与门体只订阅结果，不反向改状态。重开关卡时复位一次状态即可，不会出现"门开着但标记没清"的脏数据。
 
 **交互先站位再触发。** 每个可交互物件上挂 `RoomInteractable`，绑定一个 `standPoint`；点击后角色先走到站位点，抵达才执行交互。这样从结构上排除了"隔着半张地图点门也能开"的情况，比事后加距离判断更稳。
 
-**行走范围用矩形夹取。** `RobotWalker` 用 `minWalk` / `maxWalk` 两个角点定义可走区域，`MoveTo` 里直接 `Mathf.Clamp` 目标点，配合 0.025 的到达阈值判定 `IsMoving`。没有障碍寻路，这是刻意的简化——原型阶段先保证手感。
+**按脚底限制行走。** `WalkableArea2D` 用世界坐标多边形和物件接地范围限制移动，并保留脚底间距；合法目标可绕过凹角和机器，点击墙面会停在首个边界。`RobotWalker` 按实际移动距离播放步态，停住后回到站姿。第一关装腿后、装手前也有独立腿部动作；第四关攀梯保留单独的抓握与抬腿姿态。
 
-场景由 `Assets/Editor/` 下的构建与布置脚本生成。第四关的 `PrisonChapterBuilder` 创建三区域和 UI，并连接第三关；已有第四关场景时会拒绝覆盖。
+场景由 `Assets/Editor/` 下的构建与布置脚本生成。第四关的 `PrisonChapterBuilder` 创建三区域和 UI，并连接第三关；已有第四关场景时会拒绝覆盖。`CharacterMotionSetup` 为四关配置动作与地面；如果重建旧场景，需重新运行菜单 `Tools/Robot Escape/Apply Character Motion`。
 
 ## 已知限制
 
 - 没有跨关存档，重开会复位到本关初始状态。
-- 行走区域是矩形，没有障碍寻路，走到墙边会贴边滑动。
+- 地面和障碍为当前布景手工标定；调整机器、墙面或梯子位置后，应同步修改地面与交互站位。
 - 中文 UI 使用本机 Microsoft YaHei 系统字体，跨平台发布前需换成可分发字体。
 - 第五关及之后未实现。
 - 旧关卡的部分布置工具会修改现有场景，运行前应保存并备份；第四关构建工具不会覆盖已有第四关。

@@ -1,0 +1,21 @@
+{
+  "mode": "built-in imagegen",
+  "specs": [
+    {
+      "key": "HeroWalk",
+      "ref": "hero-walk.png",
+      "prompt": "Edit this approved 8-pose robot walking sheet into a PRODUCTION READY game sprite atlas. Preserve the identical ivory brass robot, teal eyes, full jointed body and all eight walking poses in the same FOUR columns by TWO rows. Crucial edit: REMOVE EVERY PART of the white/gray backdrop and ground shadow. Pixels outside each robot must be truly alpha 0 with a clean cutout edge, not a painted white canvas or semi-transparent wash. Exactly 8 full-body isolated robots, no floor or cast shadow, no text. Equal cells, identical robot body proportions and apparent height, feet contact aligned on identical baseline per row, no pose may touch another cell. Walking must alternate LEFT and RIGHT legs and counter-swing arms, no duplicated half cycle. Restore clean metal silhouettes and retain fine watercolor texture within robot. Keep front/back legs identifiable by near/far shading."
+    },
+    {
+      "key": "GuardWalk",
+      "ref": "guard-walk.png",
+      "prompt": "Edit this approved black-capped mechanical guard atlas into production ready 8-frame walking animation. Exactly FOUR equal columns by TWO rows; preserve tall angular dark teal uniform brass robot and all8 walking phases. Critical continuity fix: LANTERN IS CLIPPED TO HIS BELT ON THE SAME VISIBLE HIP IN ALL EIGHT FRAMES. No hand carrying the lantern; both arms swing naturally opposite legs. Baton and compact telescope stay clipped to belt. Keep feet on same baseline in each cell, identical head and torso size, alternate left/right heel contact and foot passing. Render only clean isolated robot cutouts on genuinely transparent alpha0 background. Remove all colored edge artifacts, halos, ground, shadows, whitewash. No labels or lines. Maintain recognizable approved identity, not new design."
+    },
+    {
+      "key": "GuardObserve",
+      "ref": "guard-telescope.png",
+      "prompt": "Make this four-frame approved guard telescope sequence production-ready with REAL TRANSPARENCY. Preserve the exact four poses in FOUR equal columns in ONE row: reach telescope at belt, raise to eye, fully extended observing right, lower back to belt. Lantern stays clipped to SAME visible belt hip throughout, baton on belt. Identical tall black-cap teal brass robot identity, complete boots in each cell, same body height, feet baseline and camera. REMOVE all light gray/white background wash, grain outside silhouette, ground marks, blobs and cast shadow: all outside each character must be actual transparent alpha0. No opaque white canvas, checkerboard depiction, haze or labels. Keep metal and painted detail INSIDE character, clean isolated cutouts with generous transparent gutters."
+    }
+  ],
+  "finalObservePrompt": "From this TRANSPARENT guard walking atlas create a DIFFERENT acting sprite sheet. FOUR isolated full-body guard sprites in FOUR equal columns on ONE row, on exactly the same empty transparent alpha0 canvas as the reference. Do not use white, paper, gray, fog, cast shadows, ground, floor, checkerboard pattern or any background pixels. Preserve black-cap, dark-teal brass mechanical guard identity and lantern clipped to near belt hip; baton stays belt. All stand facing right, complete boots, same size and aligned foot baseline. 1 guardsman retrieves compact brass telescope from belt with hand; 2 lifts telescope toward right eye; 3 holds extended telescope to eye with both hands and peers to far right; 4 collapses and lowers telescope to belt. The lantern must remain on his belt in the same position in ALL poses, hands free for telescope. Retain side-three-quarter hand-painted metallic textures, no text. The delivered PNG must contain actual alpha0 clear space between all poses and around silhouettes, not painted off-white."
+}

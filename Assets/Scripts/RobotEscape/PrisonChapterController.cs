@@ -8,6 +8,7 @@ namespace RobotEscape
     public sealed class PrisonChapterController : MonoBehaviour
     {
         public RobotWalker robot;
+        public WalkableArea2D[] walkZones;
         public PrisonPatrol patrol;
         public GameObject[] areas;
         public PrisonTarget[] targets;
@@ -149,7 +150,7 @@ namespace RobotEscape
                     if (!HasRod && !HasTool) BeginNoisyAction(target); else Say("吱……", 1);
                     break;
                 case PrisonAction.Vent:
-                    if (VentOpen) ChangeArea(1, new Vector2(-5.2f, -3f), false);
+                    if (VentOpen) ChangeArea(1, new Vector2(-5.2f, -3.45f), false);
                     else if ((SelectedItem == 0 && HasRod) || (SelectedItem == 2 && HasTool)) BeginNoisyAction(target);
                     else { patrol.PlayMetal(); Say("咔。", 1); }
                     break;
@@ -268,7 +269,7 @@ namespace RobotEscape
         private void BeginClimb()
         {
             robot.Stop(); pending = null; Climbing = true; climbElapsed = 0;
-            climbingUp = !UpperLanding; climbStartY = UpperLanding ? 2f : -3f; climbEndY = UpperLanding ? -3f : 2f;
+            climbingUp = !UpperLanding; climbStartY = UpperLanding ? 2f : -3.35f; climbEndY = UpperLanding ? -3.35f : 2f;
             robot.transform.position = new Vector3(0, climbStartY, 0); robot.enabled = false;
             if (robot.body != null) robot.body.localPosition = bodyOrigin;
             robot.illustration.flipX = false;
@@ -311,8 +312,19 @@ namespace RobotEscape
 
         private void SetWalkBounds()
         {
-            robot.minWalk = Area == 1 && UpperLanding ? new Vector2(-3.5f, 2f) : new Vector2(-6.5f, -3.2f);
-            robot.maxWalk = Area == 1 && UpperLanding ? new Vector2(5.7f, 2f) : new Vector2(6.5f, -2.7f);
+            if (walkZones != null && walkZones.Length == 4 && robot.walkArea != null)
+            {
+                WalkableArea2D zone = walkZones[Area == 0 ? 0 : Area == 1 ? UpperLanding ? 2 : 1 : 3];
+                robot.walkArea.boundary = zone.boundary; robot.walkArea.obstacles = zone.obstacles; robot.walkArea.radius = zone.radius;
+                Vector2 min = zone.boundary[0], max = min;
+                foreach (Vector2 point in zone.boundary) { min = Vector2.Min(min, point); max = Vector2.Max(max, point); }
+                robot.minWalk = min; robot.maxWalk = max;
+            }
+            else
+            {
+                robot.minWalk = Area == 1 && UpperLanding ? new Vector2(-1.2f, 1.85f) : new Vector2(-6.5f, -3.7f);
+                robot.maxWalk = Area == 1 && UpperLanding ? new Vector2(5.7f, 2.25f) : new Vector2(6.5f, -2.6f);
+            }
         }
 
         private void SetLadderStand()
@@ -320,7 +332,7 @@ namespace RobotEscape
             if (targets == null) return;
             foreach (PrisonTarget target in targets)
                 if (target != null && target.action == PrisonAction.Ladder && target.standPoint != null)
-                    target.standPoint.position = new Vector3(0, UpperLanding ? 2f : -3f, 0);
+                    target.standPoint.position = new Vector3(0, UpperLanding ? 2f : -3.35f, 0);
         }
 
         private void SoftCatch()
