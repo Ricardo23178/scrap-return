@@ -194,7 +194,7 @@ namespace RobotEscape
                     if (!DoorUnlocked || !HasKey) return;
                     if (patrol.NearCell) { SoftCatch(); break; }
                     pending = null; robot.Stop(); Completed = true; ClearPanels(); SetActive(winPanel, true);
-                    if (inspectText != null) inspectText.text = "你钻进了通向城内的维修通道。\n远处，厨房的炉火还亮着。\n\n第四关 · 越狱\n下一关：寻找贝塔（尚未制作）";
+                    if (inspectText != null) inspectText.text = "你钻进了通向城内的维修通道。\n远处，厨房的炉火还亮着。\n\n第四关 · 越狱\n下一关：齿轮广场";
                     break;
                 case PrisonAction.Prisoner:
                     PrisonerSpoken = true;
@@ -420,6 +420,10 @@ namespace RobotEscape
             UpdateVisuals(0);
         }
 
+        public void ContinueToCity()
+        {
+            if (Completed) SceneManager.LoadScene("CitySquare");
+        }
         public void ReturnToTitle() { Restart(); SceneManager.LoadScene("RobotEscapeDemo"); }
         private static bool Active(GameObject value) { return value != null && value.activeSelf; }
         private static void SetActive(GameObject value, bool state) { if (value != null) value.SetActive(state); }

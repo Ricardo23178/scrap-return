@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PrisonEscape.unity
     guid: 9308804e0b6985f4aba271e3a7663ab9
+  - enabled: 1
+    path: Assets/Scenes/CitySquare.unity
+    guid: 30f7553bb21573849baca77c20e579ef
+  - enabled: 1
+    path: Assets/Scenes/TowerElevator.unity
+    guid: d288ae007ebb42b4da31061867c3c065
   m_configObjects: {}
